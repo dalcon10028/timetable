@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css?family=Jua&display=swap&subset=korean');
+@font-face{
+    font-family: "Malgun Gothic";
+    src: url('font/MalgunGothic.eot');
+}
+.container{
+    width: 400px;
+    height: 500px;
+}
+table{
+    margin: 7px;
+    border: 1px solid rgba(211, 211, 211, 40);
+}
+
+.left_time{
+    font-size: 3px;
+    border: 1px solid rgba(211, 211, 211, 40);
+    text-align: right;
+    width: 50px;
+    vertical-align: top;
+}
+.week{
+    border: 1px solid rgba(211, 211, 211, 40);
+    text-align: center;    
+    font-family: "Malgun Gothic";
+    font-weight: bold;
+    font-size: 11px;
+}
+td{
+    padding: 4px;
+    height: 35px;
+    border: 1px solid rgba(211, 211, 211, 0.7);
+    text-align: center;
+    font-family: "Malgun Gothic";
+    font-weight: bold;
+    font-size: 11px;
+    width: 100px;
+}
+.class{
+    background-color: rgba(100, 100, 100, 0.2);
+}
+#d-day{
+    margin: 7px;
+    font-family: 'Jua', sans-serif;
+    color: red;
+    font-size: 24px;
+}

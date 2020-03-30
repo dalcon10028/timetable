@@ -1,0 +1,29 @@
+{
+    "manifest_version": 2,
+    "name": "2020년 1학기 시간표",
+    "version": "1.0.0",
+
+    "description": "2020년도 1학기 시간표 입니다.",
+    "icons": { "16": "favicon.ico",
+        "48": "favicon.ico",
+       "128": "favicon.ico" },
+    "browser_action": {
+        "default_popup": "background.html",
+        "default_icon": { 
+            "16": "favicon.png",
+            "48": "favicon.png"
+        }
+    },
+    "content_security_policy": "script-src 'self' https://*.googleapis.com; object-src 'self'",
+    "content_scripts": [
+        {
+            "matches": [
+                "*://*/*.*",
+                "file:///*/*.*"
+            ],
+            "js": ["script.js"],
+            "run_at": "document_start",
+            "all_frames": true
+        }
+    ]
+}
