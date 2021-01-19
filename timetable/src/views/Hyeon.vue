@@ -1,0 +1,183 @@
+<template>
+  <div class="timetable">
+    <div class="week-names">
+      <div>월</div>
+      <div>화</div>
+      <div>수</div>
+      <div>목</div>
+      <div>금</div>
+      <div class="weekend">saturday</div>
+      <div class="weekend">sunday</div>
+    </div>
+    <div class="time-interval">
+      <div>8:00 - 10:00</div>
+      <div>10:00 - 12:00</div>
+      <div>12:00 - 14:00</div>
+      <div>14:00 - 16:00</div>
+      <div>16:00 - 18:00</div>
+      <div>18:00 - 20:00</div>
+    </div>
+    <div class="content">
+      <div>
+        <div class="accent-orange-gradient"></div>
+      </div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div>
+        <div class="accent-green-gradient"></div>
+      </div>
+      <div class="weekend"></div>
+      <div class="weekend"></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div>
+        <div class="accent-cyan-gradient"></div>
+      </div>
+      <div></div>
+      <div class="weekend"></div>
+      <div class="weekend"></div>
+      <div>
+        <div class="accent-pink-gradient"></div>
+      </div>
+      <div></div>
+      <div>
+        <div class="accent-purple-gradient"></div>
+      </div>
+      <div></div>
+      <div></div>
+      <div class="weekend"></div>
+      <div class="weekend"></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div class="weekend"></div>
+      <div class="weekend"></div>
+      <div>
+        <div class="accent-purple-gradient"></div>
+      </div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div class="weekend"></div>
+      <div class="weekend"></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div class="weekend"></div>
+      <div class="weekend"></div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "Home"
+};
+</script>
+<style lang="scss" scoped>
+$accent-base: #8eeec0;
+$cutty-sark: #546e7a;
+$porcelain: #eceff1;
+$accents: (
+  pink: adjust-hue($accent-base, -180%),
+  orange: adjust-hue($accent-base, -120%),
+  green: adjust-hue($accent-base, -60%),
+  cyan: $accent-base,
+  blue: adjust-hue($accent-base, 60%),
+  purple: adjust-hue($accent-base, 120%)
+);
+
+@function make-gradient($color) {
+  @return linear-gradient(135deg, $color, adjust-hue($color, 40%));
+}
+
+@mixin make-tiles {
+  @each $name, $value in $accents {
+    .accent-#{$name}-gradient {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      background: make-gradient($value);
+      transition: 0.2s ease box-shadow, 0.2s ease transform;
+      &:hover {
+        box-shadow: 0 20px 30px 0 transparentize($value, 0.7);
+        transform: scale(1.05);
+      }
+    }
+  }
+}
+
+html,
+body {
+  margin: 0;
+  font-family: "Karla";
+  color: $cutty-sark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.timetable {
+  @include make-tiles;
+  display: grid;
+  grid-template-areas:
+    ". week"
+    "time content";
+  grid-template-columns: 120px;
+  grid-template-rows: 60px;
+  width: 100vw;
+  height: 100vh;
+  .weekend {
+    background: lighten($porcelain, 5%);
+    color: lighten($cutty-sark, 20%);
+  }
+  .week-names {
+    grid-area: week;
+    display: grid;
+    // 7 days a week
+    grid-template-columns: repeat(7, 1fr);
+    text-transform: uppercase;
+    font-size: 12px;
+    & > div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      box-shadow: inset 1px 0 0 $porcelain;
+    }
+  }
+  .time-interval {
+    grid-area: time;
+    display: grid;
+    // 6 time intervals
+    grid-template-rows: repeat(6, 1fr);
+    font-size: 14px;
+    & > div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      box-shadow: inset 0 1px 0 0 $porcelain;
+    }
+  }
+  .content {
+    grid-area: content;
+    display: grid;
+    grid-template-rows: repeat(6, 1fr);
+    grid-template-columns: repeat(7, 1fr);
+    & > div {
+      box-shadow: inset 1px 0 0 $porcelain, inset 0 1px 0 0 $porcelain;
+    }
+  }
+}
+</style>
