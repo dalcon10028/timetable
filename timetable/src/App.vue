@@ -9,26 +9,38 @@
 
       <v-tab @click="$router.push('yeon')">
         연권
-        <v-icon tag="span">😎</v-icon>
+        <v-icon tag="span">🧑</v-icon>
       </v-tab>
 
       <v-tab @click="$router.push('mail')">
-        <v-badge color="pink" content="3" light>
+        <v-badge color="pink" :content="count" light>
           편지함
         </v-badge>
         <v-icon tag="span">📧</v-icon>
       </v-tab>
     </v-tabs>
-    <router-view />
+    <transition name="page" mode="out-in">
+      <router-view />
+    </transition>
   </v-app>
 </template>
 <script>
 export default {
   data() {
-    return {};
+    return {
+      count: ""
+    };
   },
   created() {
-    this.$router.push("hyeon");
+    this.$router.push(this.$store.state.user);
+    this.$http
+      .get(
+        `https://zodg2trlwb.execute-api.ap-northeast-2.amazonaws.com/2021-01-21/message/unconfirmedCount?user=${this.$store.state.user}`
+      )
+      .then(({ data }) => {
+        this.count = data[0].count;
+      })
+      .catch(err => console.log(err));
   }
 };
 </script>
@@ -36,5 +48,14 @@ export default {
 html {
   width: 400px;
   height: 500px;
+}
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.5s, transform 0.5s;
+}
+.page-enter,
+.page-leave-to {
+  opacity: 0;
+  transform: translateX(-30%);
 }
 </style>

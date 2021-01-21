@@ -165,7 +165,7 @@ body {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 100%;
+      width: 50%;
       height: 100%;
       box-shadow: inset 0 1px 0 0 $porcelain;
     }
