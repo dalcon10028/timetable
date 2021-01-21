@@ -1,24 +1,20 @@
 <template>
   <div>
-    {{ data }}
+    <show-message></show-message>
   </div>
 </template>
 
 <script>
+import ShowMessage from "@/components/ShowMessage";
+
 export default {
+  components: {
+    ShowMessage
+  },
   data: () => ({
     data: ""
   }),
-  created() {
-    this.$http
-      .get(
-        "https://eiylh14ewb.execute-api.ap-northeast-2.amazonaws.com/default/timetable-2021/2"
-      )
-      .then(({ data }) => {
-        this.data = data;
-      })
-      .catch(err => (this.data = err));
-  }
+  created() {}
 };
 </script>
 

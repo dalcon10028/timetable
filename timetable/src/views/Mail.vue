@@ -1,10 +1,13 @@
 <template>
   <div>
     <v-list two-line>
-      <show-message></show-message>
       <v-list-item-group multiple>
         <template v-for="(item, index) in items">
-          <v-list-item :key="item.title" active-class="pink--text">
+          <v-list-item
+            :key="item.title"
+            active-class="pink--text"
+            @click="ShowMessage(item.id)"
+          >
             <template v-slot:default="{ active }">
               <v-list-item-content>
                 <v-list-item-title v-text="item.title"></v-list-item-title>
@@ -27,21 +30,27 @@
         </template>
       </v-list-item-group>
     </v-list>
+    <show-message :bus="bus" />
+    <write-message :bus="bus" />
     <v-btn color="pink" dark fixed bottom right fab small>
-      <v-icon>mdi-plus</v-icon>
+      <v-icon @click="bus.$emit('show-form')">mdi-plus</v-icon>
     </v-btn>
   </div>
 </template>
 <script>
+import Vue from "vue";
 import ShowMessage from "@/components/ShowMessage.vue";
+import WriteMessage from "@/components/WriteMessage.vue";
 
 export default {
   components: {
-    ShowMessage
+    ShowMessage,
+    WriteMessage
   },
   data: () => ({
     selected: [2, 3],
-    items: []
+    items: [],
+    bus: new Vue()
   }),
   computed: {
     timeString() {
@@ -71,6 +80,12 @@ export default {
         if (content.length <= 12) return content;
         else return content.substring(0, 12) + "...";
       };
+    }
+  },
+  methods: {
+    ShowMessage(id) {
+      this.bus.$emit("show-message", { id });
+      this.bus.$emit("show-dialog");
     }
   },
   created() {
