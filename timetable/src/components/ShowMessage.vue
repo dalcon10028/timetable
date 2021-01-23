@@ -6,19 +6,28 @@
     transition="dialog-bottom-transition"
   >
     <v-card class="d-flex flex-column">
-      <v-img
-        class="white--text align-center"
-        max-height="50px"
-        src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
-      >
-        <v-card-title>{{ message.title }}</v-card-title>
-      </v-img>
-      <v-card-subtitle class="pb-0">
-        {{ message.author }}
-      </v-card-subtitle>
-
+      <v-card-title>편지읽기</v-card-title>
       <v-card-text class="text--primary">
-        {{ message.content }}
+        <v-form ref="form" v-model="valid" lazy-validation>
+          <v-container>
+            <v-row>
+              <v-text-field
+                disabled
+                dense
+                :value="message.title"
+              ></v-text-field>
+            </v-row>
+            <v-row class="mt-5">
+              <v-textarea
+                outlined
+                :value="message.content"
+                height="320"
+                no-resize
+                disabled
+              ></v-textarea>
+            </v-row>
+          </v-container>
+        </v-form>
       </v-card-text>
       <v-spacer></v-spacer>
       <v-card-actions>

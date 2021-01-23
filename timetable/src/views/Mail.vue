@@ -1,29 +1,24 @@
 <template>
   <div>
     <v-list two-line>
-      <v-list-item-group multiple>
+      <v-list-item-group multiple v-model="selected" active-class="pink--text">
         <template v-for="(item, index) in items">
-          <v-list-item
-            :key="item.title"
-            active-class="pink--text"
-            @click="ShowMessage(item.id)"
-          >
-            <template v-slot:default="{ active }">
-              <v-list-item-content>
-                <v-list-item-title v-text="item.title"></v-list-item-title>
+          <v-list-item :key="item.title" @click="ShowMessage(item.id)">
+            <v-list-item-content>
+              <v-list-item-title v-text="item.title"></v-list-item-title>
 
-                <v-list-item-subtitle
-                  v-text="contentString(item.content)"
-                ></v-list-item-subtitle>
-              </v-list-item-content>
+              <v-list-item-subtitle
+                v-text="contentString(item.content)"
+              ></v-list-item-subtitle>
+              {{ item.confirmed }}
+            </v-list-item-content>
 
-              <v-list-item-action>
-                <v-list-item-action-text
-                  v-text="timeString(item.created_time)"
-                ></v-list-item-action-text>
-                <v-icon v-if="active" tag="span">📌</v-icon>
-              </v-list-item-action>
-            </template>
+            <v-list-item-action>
+              <v-list-item-action-text
+                v-text="timeString(item.created_time)"
+              ></v-list-item-action-text>
+              <v-icon v-if="item.pinned === 1" tag="span">📌</v-icon>
+            </v-list-item-action>
           </v-list-item>
 
           <v-divider v-if="index < items.length - 1" :key="index"></v-divider>
@@ -48,7 +43,7 @@ export default {
     WriteMessage
   },
   data: () => ({
-    selected: [2, 3],
+    selected: [],
     items: [],
     bus: new Vue()
   }),
@@ -94,7 +89,9 @@ export default {
         "https://zodg2trlwb.execute-api.ap-northeast-2.amazonaws.com/2021-01-21/message?user=hyeon"
       )
       .then(({ data }) => {
-        this.items = data;
+        this.items = data.reverse();
+        for (let i = 0; i < this.items.legnth; i++)
+          if (data[i].confirmed === 0) this.selected.push(i);
       })
       .catch(err => console.log(err));
   }

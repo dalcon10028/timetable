@@ -1,0 +1,1 @@
+html{width:400px;height:500px}.page-enter-active,.page-leave-active{transition:opacity .5s,transform .5s}.page-enter,.page-leave-to{opacity:0;transform:translateX(-30%)}

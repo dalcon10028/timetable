@@ -1,20 +1,19 @@
 <template>
   <div>
-    <show-message></show-message>
+    <calendar></calendar>
   </div>
 </template>
 
 <script>
-import ShowMessage from "@/components/ShowMessage";
+import Calendar from "@/components/Calendar";
 
 export default {
   components: {
-    ShowMessage
+    Calendar
   },
   data: () => ({
     data: ""
-  }),
-  created() {}
+  })
 };
 </script>
 
