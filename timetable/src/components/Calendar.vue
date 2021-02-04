@@ -1,17 +1,67 @@
 <template>
   <v-sheet height="528">
-    <v-calendar ref="calendar" type="week" :weekday-format="weekName">
+    <v-calendar
+      ref="calendar"
+      type="week"
+      :weekday-format="weekName"
+      :weekdays="[1, 2, 3, 4, 5]"
+      :first-interval="8"
+      :interval-count="15"
+      :events="events"
+      event-color="red"
+      @click:event="showEvent"
+    >
     </v-calendar>
+    <v-menu
+      v-model="selectedOpen"
+      :close-on-content-click="false"
+      :activator="selectedElement"
+      offset-x
+    >
+      <v-card color="grey lighten-4" min-width="350px" flat>
+        <v-toolbar :color="selectedEvent.color" dark>
+          <v-btn icon>
+            <v-icon>mdi-pencil</v-icon>
+          </v-btn>
+          <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-btn icon>
+            <v-icon>mdi-dots-vertical</v-icon>
+          </v-btn>
+        </v-toolbar>
+        <v-card-text>
+          <span v-html="selectedEvent.details"></span>
+        </v-card-text>
+        <v-card-actions>
+          <v-btn text color="secondary" @click="selectedOpen = false">
+            닫기
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-menu>
   </v-sheet>
 </template>
 <script>
 export default {
   data: () => ({
     value: "",
-    weekdays: [1, 2, 3, 4, 5]
+    weekdays: [1, 2, 3, 4, 5],
+    selectedEvent: {},
+    selectedElement: null,
+    selectedOpen: false,
+    events: [
+      {
+        name: "안녕하세요",
+        start: "2021-02-04 09:00",
+        end: "2021-02-04 10:00"
+      },
+      {
+        name: "하이루루루루루루루루루루",
+        start: "2021-02-02 12:30",
+        end: "2021-02-03 15:30"
+      }
+    ]
   }),
-  computed: {},
-  mounted() {},
   methods: {
     weekName(day) {
       switch (day.weekday) {
@@ -30,8 +80,33 @@ export default {
         case 6:
           return "토";
       }
+    },
+    showEvent({ nativeEvent, event }) {
+      const open = () => {
+        this.selectedEvent = event;
+        this.selectedElement = nativeEvent.target;
+        setTimeout(() => {
+          this.selectedOpen = true;
+        }, 10);
+      };
+
+      if (this.selectedOpen) {
+        this.selectedOpen = false;
+        setTimeout(open, 10);
+      } else {
+        open();
+      }
+
+      nativeEvent.stopPropagation();
     }
   }
 };
 </script>
-<style lang="scss"></style>
+<style lang="scss">
+.hover
+  .v-calendar-week-wrapper
+  .v-calendar-event-vtcolor-Orange
+  .v-calendar-event-content {
+  background-color: #fa6d00;
+}
+</style>
