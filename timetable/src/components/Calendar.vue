@@ -8,9 +8,11 @@
       :first-interval="8"
       :interval-count="15"
       :events="events"
-      event-color="red"
       @click:event="showEvent"
     >
+      <template v-slot:event="{ event }">
+        <div class="fill-height pl-2 dd">하하 {{ event.name }}</div>
+      </template>
     </v-calendar>
     <v-menu
       v-model="selectedOpen"
@@ -53,7 +55,8 @@ export default {
       {
         name: "안녕하세요",
         start: "2021-02-04 09:00",
-        end: "2021-02-04 10:00"
+        end: "2021-02-04 10:00",
+        color: "red"
       },
       {
         name: "하이루루루루루루루루루루",
@@ -103,10 +106,17 @@ export default {
 };
 </script>
 <style lang="scss">
-.hover
-  .v-calendar-week-wrapper
-  .v-calendar-event-vtcolor-Orange
-  .v-calendar-event-content {
-  background-color: #fa6d00;
+.dd {
+  background: #a1ffce; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #faffd1,
+    #a1ffce
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #faffd1,
+    #a1ffce
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 </style>
