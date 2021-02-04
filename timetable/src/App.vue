@@ -28,7 +28,7 @@
 export default {
   data() {
     return {
-      count: ""
+      count: "" || 0
     };
   },
   created() {
